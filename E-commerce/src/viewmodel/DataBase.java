@@ -62,6 +62,7 @@ public class DataBase {
         connect();
         try {
             //Counting Number of Rows in data
+            //To Do If no rows
             Statement countStatement = connection.createStatement();
             ResultSet countResultSet = countStatement.executeQuery("select count(*) from products");
             countResultSet.next();
