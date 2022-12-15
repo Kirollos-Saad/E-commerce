@@ -14,8 +14,9 @@ public class ProductItem {
     
     @Override
     public String toString(){
+        System.out.println("Test git.");
         return id + "," + name + "," + price;
-    
+        
     }
     
    
