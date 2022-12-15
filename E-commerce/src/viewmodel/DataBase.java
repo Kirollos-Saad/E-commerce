@@ -5,32 +5,54 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.PreparedStatement;
 
 public class DataBase {
+
     private String dataBaseName;
     private String dataBaseUser;
     private String dataBasePassword;
-    public static final int PORT_NUMBER = 3306; 
+    public static final int PORT_NUMBER = 3306;
+    private Connection connection;
 
     public DataBase(String dataBaseName, String dataBaseUser, String dataBasePassword) {
         this.dataBaseName = dataBaseName;
         this.dataBaseUser = dataBaseUser;
         this.dataBasePassword = dataBasePassword;
     }
-    
-    private String createURL(){
-        return "jdbc:mysql://localhost:" + PORT_NUMBER + "/" + dataBaseName;    
+
+    private String createURL() {
+        return "jdbc:mysql://localhost:" + PORT_NUMBER + "/" + dataBaseName;
     }
-    
-    public void connect(){
+
+    private void connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(createURL(),dataBaseUser,dataBasePassword);
-            System.out.println("Connection Success");
+            this.connection = DriverManager.getConnection(createURL(), dataBaseUser, dataBasePassword);
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-    
+
     }
-    
+
+    public boolean writeRow(int id, String name, double price) {
+        if (connection == null) {
+            connect();
+        }
+        String InsertQuery = "INSERT INTO products(id, name, price) VALUES (?,?,?)";
+        PreparedStatement prepStatement;
+        try {
+            prepStatement = connection.prepareStatement(InsertQuery);
+            prepStatement.setInt(1, id);
+            prepStatement.setString(2, name);
+            prepStatement.setDouble(3, price);
+            prepStatement.executeUpdate();
+            prepStatement.close();
+            return true;
+        } catch (SQLException ex) {
+            return false;
+        }
+
+    }
+
 }
