@@ -26,7 +26,7 @@ public class ViewProductsScreen extends javax.swing.JFrame {
     public void setTableData() {
         boolean result = viewModel.setTableData(dataTable);
         if (!result) {
-            JOptionPane.showMessageDialog(null, "No data to be viewed",
+            JOptionPane.showMessageDialog(parent, "No data to be viewed",
                     "No data", JOptionPane.ERROR_MESSAGE);
             closeWindow();
 
