@@ -19,6 +19,10 @@ public class ProductItem {
         
     }
     
-   
+    public int getId()
+    {
+        return id;
+    }
+    
           
 }
