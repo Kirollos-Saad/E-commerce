@@ -153,7 +153,11 @@ public class AddProductScreen extends javax.swing.JFrame implements Node {
         if (Name.equals("") || Price.equals("") || id.equals("")) {
             JOptionPane.showMessageDialog(null, "Empty field(s)!");
         } else {
-            add = new AddProductViewModel();
+            try {
+                add = new AddProductViewModel();
+            } catch (SQLException ex) {
+                Logger.getLogger(AddProductScreen.class.getName()).log(Level.SEVERE, null, ex);
+            }
             this.setVisible(false);
             ((JFrame) this.getParentNode()).setVisible(true);
         }
