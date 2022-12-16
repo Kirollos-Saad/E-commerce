@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.sql.PreparedStatement;
+import java.text.DecimalFormat;
 import model.ProductItem;
 
 public class DataBase {
@@ -61,16 +62,12 @@ public class DataBase {
     public ProductItem[] readAllData() {
         connect();
         try {
-            //Counting Number of Rows in data
-            //To Do If no rows
-            Statement countStatement = connection.createStatement();
-            ResultSet countResultSet = countStatement.executeQuery("select count(*) from products");
-            countResultSet.next();
-            int count = countResultSet.getInt(1);
-            countResultSet.close();
-            ProductItem[] productData = new ProductItem[count];
-            
-            
+            int rowCount = getRowCount();
+            if(rowCount == 0){
+                return null;
+            }
+            ProductItem[] productData = new ProductItem[rowCount];
+
             //Getting data
             Statement readStatement = connection.createStatement();
             ResultSet readResultSet = readStatement.executeQuery("SELECT * FROM products");
@@ -78,8 +75,10 @@ public class DataBase {
             while (readResultSet.next()) {
                 int productId = readResultSet.getInt("id");
                 String productName = readResultSet.getString("name");
-                double productPrice = readResultSet.getFloat("price");                
-                productData[i++] = new ProductItem(productId, productName, productPrice);                
+                double productPrice =readResultSet.getFloat("price");  
+                DecimalFormat decimalFormatter = new DecimalFormat("0.00");
+                productPrice = Double.valueOf(decimalFormatter.format(productPrice));
+                productData[i++] = new ProductItem(productId, productName, productPrice);
             }
             readResultSet.close();
             return productData;
@@ -89,6 +88,23 @@ public class DataBase {
         }
 
         return null;
+    }
+
+    public int getRowCount() {
+        connect();
+        try {
+
+            Statement countStatement = connection.createStatement();
+            ResultSet countResultSet = countStatement.executeQuery("select count(*) from products");
+            countResultSet.next();
+            int count = countResultSet.getInt(1);
+            countResultSet.close();
+            return count;
+        } catch (SQLException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+
     }
 
 }
