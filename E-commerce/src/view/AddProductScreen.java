@@ -155,7 +155,7 @@ public class AddProductScreen extends javax.swing.JFrame implements Node {
         } else {
             try {
                 add = new AddProductViewModel();
-                Boolean result=add.validatethenAdd(id, Name, Price);
+                Boolean result=add.validateThenAdd(id, Name, Price);
             } catch (SQLException ex) {
                 Logger.getLogger(AddProductScreen.class.getName()).log(Level.SEVERE, null, ex);
             }
