@@ -22,6 +22,7 @@ public class AddProductViewModel {
         
         try
         {
+            System.out.println("id = " + id);
             int idValue = Integer.parseInt(id);
             double priceValue = Double.parseDouble(price);
             
