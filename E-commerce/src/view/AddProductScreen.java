@@ -5,9 +5,6 @@ import viewmodel.AddProductViewModel;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import model.ProductItem;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JFileChooser;
@@ -16,9 +13,12 @@ import javax.swing.filechooser.FileFilter;
 public class AddProductScreen extends javax.swing.JFrame implements Node {
 
     private Node parent;
+    private AddProductViewModel addModel;
 
-    public AddProductScreen() {
+    public AddProductScreen(Node parent, AddProductViewModel addModel) {
         initComponents();
+        setParentNode(parent);
+        this.addModel = addModel;
     }
 
     @SuppressWarnings("unchecked")
@@ -147,35 +147,32 @@ public class AddProductScreen extends javax.swing.JFrame implements Node {
     private void AddProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddProductActionPerformed
         String Name = name.getText();
         String Price = price.getText();
-        String id = ID.getText();
-
-        AddProductViewModel add;
-        if (Name.equals("") || Price.equals("") || id.equals("")) {
-            JOptionPane.showMessageDialog(null, "Empty field(s)!");
-        } else {
-            try {
-                add = new AddProductViewModel();
-                Boolean result=add.validateThenAdd(id, Name, Price);
-            } catch (SQLException ex) {
-                Logger.getLogger(AddProductScreen.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            this.setVisible(false);
-            ((JFrame) this.getParentNode()).setVisible(true);
-        }
+        String id = ID.getText();           
+        addModel.validateThenAdd(this, id, Name, Price);        
+        clear();
 
     }//GEN-LAST:event_AddProductActionPerformed
 
     private void BrowseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BrowseActionPerformed
         JFileChooser fileChooser = new JFileChooser();
-        
+
     }//GEN-LAST:event_BrowseActionPerformed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
-        this.setVisible(false);
-        JFrame parent = (JFrame) this.getParentNode();
-        if (parent != null)
-            parent.setVisible(true);
+        closeWindow();
     }//GEN-LAST:event_formWindowClosing
+
+    public void closeWindow() {
+        this.setVisible(false);
+        ((javax.swing.JFrame) parent).setVisible(true);
+
+    }
+    
+    public void clear(){
+       name.setText("");
+       ID.setText("");
+       price.setText("");
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -1,42 +1,32 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
+
 package view;
 
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
+import model.Node;
 import viewmodel.ViewProductViewModel;
 
-/**
- *
- * @author MO
- */
-public class ViewProductsScreen extends javax.swing.JFrame {
+
+public class ViewProductsScreen extends javax.swing.JFrame implements Node{
 
     private ViewProductViewModel viewModel;
-    private javax.swing.JFrame parent;
+    private Node parent;
 
-    public ViewProductsScreen(javax.swing.JFrame parent, ViewProductViewModel viewModel) {
+    public ViewProductsScreen(Node parent, ViewProductViewModel viewModel) {
         initComponents();
-        this.parent = parent;
+        setParentNode(parent);
         this.viewModel = viewModel;
     }
 
     public void setTableData() {
-        boolean result = viewModel.setTableData(dataTable);
+        boolean result = viewModel.setTableData(parent, dataTable);
         if (!result) {
-            JOptionPane.showMessageDialog(parent, "No data to be viewed",
-                    "No data", JOptionPane.ERROR_MESSAGE);
             closeWindow();
-
         }
 
     }
 
     public void closeWindow() {
         this.setVisible(false);
-        parent.setVisible(true);
+        ((javax.swing.JFrame)parent).setVisible(true);
 
     }
 
@@ -103,4 +93,15 @@ public class ViewProductsScreen extends javax.swing.JFrame {
     private javax.swing.JTable dataTable;
     private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
+
+
+    @Override
+    public Node getParentNode() {
+        return parent;
+    }
+
+    @Override
+    public void setParentNode(Node node) {
+        this.parent = node;
+    }
 }

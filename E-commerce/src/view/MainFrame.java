@@ -5,6 +5,7 @@
 package view;
 
 import model.Node;
+import viewmodel.AddProductViewModel;
 import viewmodel.DataBase;
 import viewmodel.ViewProductViewModel;
 
@@ -14,16 +15,17 @@ import viewmodel.ViewProductViewModel;
  */
 public class MainFrame extends javax.swing.JFrame implements Node {
 
-    DataBase database;
-    
-    
+    private DataBase database;
+    private AddProductScreen addWindow;
+    private ViewProductsScreen viewWindow;
+
     /**
      * Creates new form MainFrame
      */
     public MainFrame() {
         initComponents();
         this.setTitle("Product Items System");
-        this.database  = new DataBase("database","root","root");
+        this.database = new DataBase("dblab10", "root", "root");
     }
 
     /**
@@ -90,22 +92,25 @@ public class MainFrame extends javax.swing.JFrame implements Node {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        
-        AddProductScreen add = new AddProductScreen();
-        add.setParentNode(this);
+        if (addWindow == null) {
+            AddProductViewModel addWindowModel = new AddProductViewModel(database);
+            addWindow = new AddProductScreen(this, addWindowModel);
+
+        }
+
         this.setVisible(false);
-        add.setVisible(true);
-        
+        addWindow.setVisible(true);
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-        
-        ViewProductViewModel view = new ViewProductViewModel(database);
-        ViewProductsScreen viewScreen = new ViewProductsScreen(this,view);
-        viewScreen.setTableData();
+        if (viewWindow == null) {
+            ViewProductViewModel viewWindowModel = new ViewProductViewModel(database);
+            viewWindow = new ViewProductsScreen(this, viewWindowModel);
+        }
+        viewWindow.setTableData();
         this.setVisible(false);
-        viewScreen.setVisible(true);
+        viewWindow.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
