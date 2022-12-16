@@ -1,5 +1,8 @@
 package viewmodel;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.ProductItem;
 
@@ -7,10 +10,12 @@ import model.ProductItem;
 public class AddProductViewModel {
     
     private DataBase database;
+     private Connection con;
     
-    public AddProductViewModel()
+    public AddProductViewModel() throws SQLException
     {
         this.database = database;
+        this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "root");
     }
     
     
