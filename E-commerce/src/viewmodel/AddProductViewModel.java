@@ -2,6 +2,7 @@ package viewmodel;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import model.ProductItem;
@@ -17,10 +18,8 @@ public class AddProductViewModel {
         this.database = database;
         this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "root");
     }
-    
-    
-    
-    public boolean validate(String id,String name,String price)
+   
+    public boolean validatethenAdd(String id,String name,String price)
     {
    
         //1- check id and price are numbers.
@@ -38,7 +37,7 @@ public class AddProductViewModel {
                 JOptionPane.showMessageDialog(null, "You entered a product id that already exists.","Unique Id",JOptionPane.ERROR_MESSAGE);
                 return false;
             }
-            
+            return database.writeRow(idValue, name, priceValue);
             
         }
         catch(NumberFormatException e)
@@ -46,8 +45,8 @@ public class AddProductViewModel {
             JOptionPane.showMessageDialog(null, "Id should be an integer number or price should be decimal value.","Numbers Validation",JOptionPane.ERROR_MESSAGE);
             return false;
         }
- 
-        return true;
+        
+       
     }
     
     
