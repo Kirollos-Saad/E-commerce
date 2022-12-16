@@ -25,7 +25,7 @@ public class MainFrame extends javax.swing.JFrame implements Node {
     public MainFrame() {
         initComponents();
         this.setTitle("Product Items System");
-        this.database = new DataBase("dblab10", "root", "root");
+        this.database = new DataBase("database", "root", "root");
     }
 
     /**
@@ -42,6 +42,7 @@ public class MainFrame extends javax.swing.JFrame implements Node {
         jButton2 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
