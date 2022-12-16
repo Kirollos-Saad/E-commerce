@@ -19,7 +19,7 @@ public class AddProductViewModel {
         this.con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db", "root", "root");
     }
    
-    public boolean validatethenAdd(String id,String name,String price)
+    public boolean validateThenAdd(String id,String name,String price)
     {
    
         //1- check id and price are numbers.
