@@ -8,7 +8,7 @@ public class AddProductViewModel {
     
     private DataBase database;
     
-    public AddProductViewModel(DataBase database)
+    public AddProductViewModel()
     {
         this.database = database;
     }
