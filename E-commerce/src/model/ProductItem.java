@@ -13,8 +13,7 @@ public class ProductItem {
     }
     
     @Override
-    public String toString(){
-        System.out.println("Test git.");
+    public String toString(){        
         return id + "," + name + "," + price;
         
     }
