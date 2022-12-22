@@ -1,2 +1,2 @@
 # E-commerce
-Simple ecommerce design using mvvm(sql used).<br>
+Simple ecommerce design using mvvm(My sql used).<br>
