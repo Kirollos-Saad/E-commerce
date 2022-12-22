@@ -1,3 +1,2 @@
 # E-commerce
-
-test Push
+Simple ecommerce design using mvvm(sql used).<br>
